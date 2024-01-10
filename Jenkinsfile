@@ -6,7 +6,7 @@ pipeline {
             steps {
                withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: "aws-cred",
+                    credentialsId: "9f535483-188c-4e51-84d0-41a073f6f7f4",
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     sh 'aws ec2 describe-instance'
