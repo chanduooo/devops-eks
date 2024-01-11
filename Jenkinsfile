@@ -13,12 +13,12 @@ pipeline {
             }
         }
     
-        /* stage('init') {
+        stage('init') {
             steps {
                 sh 'terraform init'
             }
         }
-         stage('validate') {
+        /* stage('validate') {
             steps {
                 sh 'terraform validate'
           }
