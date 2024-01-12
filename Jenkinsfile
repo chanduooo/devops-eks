@@ -18,7 +18,7 @@ pipeline {
                 sh 'terraform init'
             }
         }
-        /* stage('validate') {
+        stage('validate') {
             steps {
                 sh 'terraform validate'
           }
@@ -28,7 +28,7 @@ pipeline {
                 sh 'terraform plan'
          }
        }
-         stage('apply') {
+         /*stage('apply') {
             steps {
                 sh 'terraform apply --auto-approve'
         }
