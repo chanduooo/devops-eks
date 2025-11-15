@@ -1,43 +1,35 @@
 pipeline {
     agent any
 
-   stages {
-          stage('aws cred') {
-            steps {
-               withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: "aws-cred",
-                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-                }
-            }
+    environment {
+        AWS_ACCESS_KEY_ID     = credentials('aws_access_key_id')
+        AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
+    }
+    parameters {
+          choice choices: ['apply', 'destroy'], name: 'action'
         }
-    
-        stage('init') {
+
+
+    stages {
+       stage('terraform init -input=false') {
             steps {
                 sh 'terraform init'
             }
         }
-        stage('validate') {
+      stage('terraform validate') {
             steps {
                 sh 'terraform validate'
-          }
+            }
         }
-         stage('plan') {
+      stage('terraform plan') {
             steps {
                 sh 'terraform plan'
-         }
-       }
-         stage('apply') {
-            steps {
-                sh 'terraform apply --auto-approve'
+            }
         }
-      }
-        /*stage('destroy') {
+      stage('terraform apply') {
             steps {
-            */ sh 'terraform destroy --auto-approve'
+                sh 'terraform ${action} -auto-approve'
+            }
         }
-      }*/
-
-}
+    }
 }
